@@ -1,0 +1,1298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TrendCast India - AI Market Intelligence</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --primary-light: #dbeafe;
+            --secondary: #f59e0b;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --dark: #1f2937;
+            --light: #f8fafc;
+            --gray: #6b7280;
+            --gray-light: #e5e7eb;
+            --border: #d1d5db;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            color: var(--dark);
+            line-height: 1.6;
+        }
+
+        .app-container {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header */
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border);
+            padding: 1.5rem 2rem;
+            box-shadow: var(--shadow);
+        }
+
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo-icon {
+            width: 50px;
+            height: 50px;
+            background: var(--gradient);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+        }
+
+        .logo-text h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: 5px;
+        }
+
+        .logo-text .tagline {
+            font-size: 1rem;
+            color: var(--gray);
+            font-weight: 500;
+        }
+
+        .market-status {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .status-badge {
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .status-live {
+            background: var(--success);
+            color: white;
+        }
+
+        .live-indicator {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--success);
+            font-weight: 600;
+        }
+
+        .pulse {
+            width: 10px;
+            height: 10px;
+            background: var(--success);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
+            70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(16, 185, 129, 0); }
+            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            padding: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        /* Cards */
+        .card {
+            background: white;
+            border-radius: 16px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--gray-light);
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .card-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--gray-light);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .card-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--dark);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .card-content {
+            padding: 1.5rem;
+        }
+
+        /* Control Panel */
+        .control-panel {
+            margin-bottom: 2rem;
+        }
+
+        .control-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr auto;
+            gap: 20px;
+            align-items: end;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--dark);
+            font-size: 0.95rem;
+        }
+
+        select, button {
+            padding: 14px 16px;
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            font-size: 1rem;
+            transition: all 0.3s;
+            font-family: inherit;
+        }
+
+        select {
+            background: white;
+            cursor: pointer;
+            appearance: none;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 16px center;
+            background-size: 18px;
+        }
+
+        select:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        .btn {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition: all 0.3s;
+            font-size: 1rem;
+        }
+
+        .btn:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(37, 99, 235, 0.3);
+        }
+
+        .btn:disabled {
+            background: var(--gray);
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Agents Grid */
+        .agents-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .agent-card {
+            transition: all 0.3s;
+            border: 3px solid transparent;
+        }
+
+        .agent-card.running {
+            border-color: var(--primary);
+            background: var(--primary-light);
+        }
+
+        .agent-card.completed {
+            border-color: var(--success);
+            background: #f0fdf4;
+        }
+
+        .agent-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .agent-title {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 600;
+            color: var(--dark);
+            font-size: 1.1rem;
+        }
+
+        .agent-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--primary);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.1rem;
+        }
+
+        .status-indicator {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .status-idle { color: var(--gray); }
+        .status-running { color: var(--primary); }
+        .status-completed { color: var(--success); }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: var(--gray-light);
+            border-radius: 4px;
+            overflow: hidden;
+            margin: 1.5rem 0;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--primary-dark));
+            border-radius: 4px;
+            transition: width 0.5s ease-in-out;
+            width: 0%;
+        }
+
+        .agent-description {
+            color: var(--gray);
+            font-size: 0.95rem;
+            margin-bottom: 1rem;
+            line-height: 1.5;
+        }
+
+        .agent-data {
+            background: var(--light);
+            border-radius: 10px;
+            padding: 1.2rem;
+            font-size: 0.9rem;
+            max-height: 250px;
+            overflow-y: auto;
+            border: 1px solid var(--gray-light);
+        }
+
+        .data-grid {
+            display: grid;
+            gap: 0.8rem;
+        }
+
+        .data-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.6rem 0;
+            border-bottom: 1px solid var(--gray-light);
+        }
+
+        .data-item:last-child {
+            border-bottom: none;
+        }
+
+        .data-label {
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        .data-value {
+            color: var(--gray);
+            text-align: right;
+        }
+
+        .positive {
+            color: var(--success);
+            font-weight: 600;
+        }
+
+        .negative {
+            color: var(--danger);
+            font-weight: 600;
+        }
+
+        /* Podcast Player */
+        .podcast-player {
+            background: var(--gradient);
+            color: white;
+            border-radius: 16px;
+            overflow: hidden;
+            margin-top: 2rem;
+        }
+
+        .player-header {
+            padding: 1.5rem;
+            background: rgba(0, 0, 0, 0.1);
+        }
+
+        .player-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .player-subtitle {
+            font-size: 0.95rem;
+            opacity: 0.9;
+        }
+
+        .player-controls {
+            padding: 1.5rem;
+        }
+
+        .progress-container {
+            margin-bottom: 1.2rem;
+        }
+
+        .time-display {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.85rem;
+            opacity: 0.8;
+            margin-bottom: 1.2rem;
+        }
+
+        .control-buttons {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .control-btn {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: white;
+            border: none;
+            color: var(--primary);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+        }
+
+        .control-btn:hover {
+            transform: scale(1.1);
+        }
+
+        .play-btn {
+            width: 60px;
+            height: 60px;
+            font-size: 1.3rem;
+        }
+
+        .volume-control {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .volume-slider {
+            flex: 1;
+            height: 5px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 3px;
+            outline: none;
+            appearance: none;
+        }
+
+        .volume-slider::-webkit-slider-thumb {
+            appearance: none;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: white;
+            cursor: pointer;
+        }
+
+        .download-section {
+            padding: 1.2rem 1.5rem;
+            background: rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .download-btn {
+            background: white;
+            color: var(--primary);
+            border: none;
+            padding: 10px 20px;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s;
+        }
+
+        .download-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Market Overview */
+        .market-overview {
+            margin-bottom: 2rem;
+        }
+
+        .indices-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.2rem;
+        }
+
+        .index-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            text-align: center;
+            transition: transform 0.3s;
+        }
+
+        .index-card:hover {
+            transform: translateY(-3px);
+        }
+
+        .index-name {
+            font-size: 0.9rem;
+            color: var(--gray);
+            margin-bottom: 10px;
+        }
+
+        .index-price {
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .index-change {
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        /* Notifications */
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 1rem 1.5rem;
+            border-radius: 10px;
+            color: white;
+            font-weight: 600;
+            z-index: 1000;
+            transform: translateX(400px);
+            transition: transform 0.3s ease;
+            max-width: 400px;
+        }
+
+        .notification.show {
+            transform: translateX(0);
+        }
+
+        .notification.success {
+            background: var(--success);
+        }
+
+        .notification.error {
+            background: var(--danger);
+        }
+
+        .notification.info {
+            background: var(--primary);
+        }
+
+        /* Utility Classes */
+        .hidden {
+            display: none !important;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .spinner {
+            display: inline-block;
+            width: 18px;
+            height: 18px;
+            border: 2px solid #f3f3f3;
+            border-top: 2px solid var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .dashboard {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .control-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .agents-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .main-content {
+                padding: 1rem;
+            }
+
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+
+            .indices-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header {
+                padding: 1rem;
+            }
+
+            .logo {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .indices-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Notification System -->
+        <div id="notification" class="notification hidden"></div>
+
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <div class="logo">
+                    <div class="logo-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <div class="logo-text">
+                        <h1>TrendCast India</h1>
+                        <div class="tagline">भारतीय बाजार की धड़कन, आपकी आवाज़ में</div>
+                    </div>
+                </div>
+                <div class="market-status">
+                    <div class="live-indicator">
+                        <div class="pulse"></div>
+                        <span>LIVE DATA</span>
+                    </div>
+                    <div class="status-badge status-live" id="marketStatus">Market Open</div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Market Overview -->
+            <div class="market-overview card">
+                <div class="card-header">
+                    <h2 class="card-title">
+                        <i class="fas fa-globe-asia"></i>
+                        Live Market Overview
+                    </h2>
+                    <div class="last-updated">Last updated: <span id="updateTime">--:--:--</span></div>
+                </div>
+                <div class="card-content">
+                    <div class="indices-grid" id="indicesGrid">
+                        <!-- Market indices will be loaded here -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Control Panel -->
+            <div class="control-panel card">
+                <div class="card-header">
+                    <h2 class="card-title">
+                        <i class="fas fa-sliders-h"></i>
+                        Analysis Controls
+                    </h2>
+                </div>
+                <div class="card-content">
+                    <div class="control-grid">
+                        <div class="form-group">
+                            <label for="indexSelect">
+                                <i class="fas fa-chart-bar"></i>
+                                Market Index
+                            </label>
+                            <select id="indexSelect">
+                                <option value="NIFTY 50">NIFTY 50</option>
+                                <option value="SENSEX">SENSEX</option>
+                                <option value="NIFTY Bank">NIFTY Bank</option>
+                                <option value="NIFTY IT">NIFTY IT</option>
+                                <option value="NIFTY Auto">NIFTY Auto</option>
+                                <option value="NIFTY Pharma">NIFTY Pharma</option>
+                                <option value="NIFTY FMCG">NIFTY FMCG</option>
+                                <option value="NIFTY Metal">NIFTY Metal</option>
+                                <option value="NIFTY Midcap 100">NIFTY Midcap 100</option>
+                                <option value="NIFTY Smallcap 100">NIFTY Smallcap 100</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="languageSelect">
+                                <i class="fas fa-language"></i>
+                                Podcast Language
+                            </label>
+                            <select id="languageSelect">
+                                <option value="English">English</option>
+                                <option value="Hindi">Hindi</option>
+                                <option value="Hinglish">Hinglish</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label>&nbsp;</label>
+                            <button id="analyzeBtn" class="btn">
+                                <i class="fas fa-play"></i>
+                                Start Analysis
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Agents Grid -->
+            <div class="agents-grid" id="agentsGrid">
+                <!-- Trend Analyzer -->
+                <div class="agent-card card" id="agent-trendAnalyzer">
+                    <div class="card-content">
+                        <div class="agent-header">
+                            <div class="agent-title">
+                                <div class="agent-icon">
+                                    <i class="fas fa-chart-line"></i>
+                                </div>
+                                <span>Trend Analyzer</span>
+                            </div>
+                            <div class="status-indicator">
+                                <span class="status-idle" id="status-trendAnalyzer">Idle</span>
+                            </div>
+                        </div>
+                        <p class="agent-description">Real-time technical analysis with advanced indicators and market sentiment analysis</p>
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="progress-trendAnalyzer" style="width: 0%"></div>
+                        </div>
+                        <div class="agent-data hidden" id="data-trendAnalyzer"></div>
+                    </div>
+                </div>
+
+                <!-- Data Collector -->
+                <div class="agent-card card" id="agent-dataCollector">
+                    <div class="card-content">
+                        <div class="agent-header">
+                            <div class="agent-title">
+                                <div class="agent-icon">
+                                    <i class="fas fa-database"></i>
+                                </div>
+                                <span>Data Collector</span>
+                            </div>
+                            <div class="status-indicator">
+                                <span class="status-idle" id="status-dataCollector">Idle</span>
+                            </div>
+                        </div>
+                        <p class="agent-description">Multi-source data aggregation from NSE, BSE, RBI, and economic indicators</p>
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="progress-dataCollector" style="width: 0%"></div>
+                        </div>
+                        <div class="agent-data hidden" id="data-dataCollector"></div>
+                    </div>
+                </div>
+
+                <!-- Script Writer -->
+                <div class="agent-card card" id="agent-scriptWriter">
+                    <div class="card-content">
+                        <div class="agent-header">
+                            <div class="agent-title">
+                                <div class="agent-icon">
+                                    <i class="fas fa-pen-fancy"></i>
+                                </div>
+                                <span>Script Writer</span>
+                            </div>
+                            <div class="status-indicator">
+                                <span class="status-idle" id="status-scriptWriter">Idle</span>
+                            </div>
+                        </div>
+                        <p class="agent-description">AI-powered script generation with professional market commentary in multiple languages</p>
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="progress-scriptWriter" style="width: 0%"></div>
+                        </div>
+                        <div class="agent-data hidden" id="data-scriptWriter"></div>
+                    </div>
+                </div>
+
+                <!-- Podcaster -->
+                <div class="agent-card card" id="agent-podcaster">
+                    <div class="card-content">
+                        <div class="agent-header">
+                            <div class="agent-title">
+                                <div class="agent-icon">
+                                    <i class="fas fa-podcast"></i>
+                                </div>
+                                <span>Podcaster</span>
+                            </div>
+                            <div class="status-indicator">
+                                <span class="status-idle" id="status-podcaster">Idle</span>
+                            </div>
+                        </div>
+                        <p class="agent-description">High-quality audio production with professional voice synthesis and distribution</p>
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="progress-podcaster" style="width: 0%"></div>
+                        </div>
+                        <div class="agent-data hidden" id="data-podcaster"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Podcast Player -->
+            <div class="podcast-player card hidden" id="podcastPlayer">
+                <div class="player-header">
+                    <div class="player-title" id="podcastTitle">Market Analysis Podcast</div>
+                    <div class="player-subtitle" id="podcastSubtitle">Ready to play</div>
+                </div>
+                <div class="player-controls">
+                    <div class="progress-container">
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="audioProgress" style="width: 0%"></div>
+                        </div>
+                    </div>
+                    <div class="time-display">
+                        <span id="currentTime">0:00</span>
+                        <span id="duration">0:00</span>
+                    </div>
+                    <div class="control-buttons">
+                        <button class="control-btn" id="rewindBtn">
+                            <i class="fas fa-backward"></i>
+                        </button>
+                        <button class="control-btn play-btn" id="playBtn">
+                            <i class="fas fa-play"></i>
+                        </button>
+                        <button class="control-btn" id="forwardBtn">
+                            <i class="fas fa-forward"></i>
+                        </button>
+                    </div>
+                    <div class="volume-control">
+                        <i class="fas fa-volume-up"></i>
+                        <input type="range" class="volume-slider" id="volumeSlider" min="0" max="1" step="0.1" value="1">
+                    </div>
+                </div>
+                <div class="download-section">
+                    <div class="file-info">
+                        <div class="player-subtitle" id="fileInfo">MP3 • 2.8 MB • 3:45</div>
+                    </div>
+                    <button class="download-btn" id="downloadBtn">
+                        <i class="fas fa-download"></i>
+                        Download Podcast
+                    </button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Configuration
+        const API_BASE_URL = 'http://localhost:8000/api';
+        let currentAnalysisId = null;
+        let pollingInterval = null;
+        let audioPlayer = null;
+        let isPlaying = false;
+
+        // Initialize application
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('🚀 TrendCast India initialized');
+            initializeApp();
+        });
+
+        async function initializeApp() {
+            await loadMarketOverview();
+            setupEventListeners();
+            startMarketDataPolling();
+            showNotification('Welcome to TrendCast India! Ready to analyze markets.', 'info');
+        }
+
+        function setupEventListeners() {
+            document.getElementById('analyzeBtn').addEventListener('click', startAnalysis);
+            document.getElementById('playBtn').addEventListener('click', togglePlay);
+            document.getElementById('downloadBtn').addEventListener('click', downloadPodcast);
+            document.getElementById('volumeSlider').addEventListener('input', updateVolume);
+        }
+
+        // Market Data Functions
+        async function loadMarketOverview() {
+            try {
+                const response = await fetch(`${API_BASE_URL}/market/overview`);
+                const data = await response.json();
+                updateMarketOverview(data);
+            } catch (error) {
+                console.error('Error loading market overview:', error);
+            }
+        }
+
+        function updateMarketOverview(data) {
+            const indicesGrid = document.getElementById('indicesGrid');
+            const updateTime = document.getElementById('updateTime');
+
+            updateTime.textContent = new Date().toLocaleTimeString();
+
+            indicesGrid.innerHTML = Object.values(data.indices).map(index => {
+                const changeClass = index.change >= 0 ? 'positive' : 'negative';
+                const changeSymbol = index.change >= 0 ? '+' : '';
+                return `
+                    <div class="index-card">
+                        <div class="index-name">${index.symbol}</div>
+                        <div class="index-price">₹${index.price.toLocaleString('en-IN')}</div>
+                        <div class="index-change ${changeClass}">
+                            ${changeSymbol}${index.change.toFixed(2)} (${changeSymbol}${index.change_percent.toFixed(2)}%)
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function startMarketDataPolling() {
+            setInterval(loadMarketOverview, 30000);
+        }
+
+        // Analysis Functions
+        async function startAnalysis() {
+            const index = document.getElementById('indexSelect').value;
+            const language = document.getElementById('languageSelect').value;
+            const analyzeBtn = document.getElementById('analyzeBtn');
+
+            if (!index || !language) {
+                showNotification('Please select both market index and language', 'error');
+                return;
+            }
+
+            // Update UI
+            analyzeBtn.disabled = true;
+            analyzeBtn.innerHTML = '<i class="fas fa-circle-notch spinner"></i> Starting Analysis...';
+
+            // Reset agents
+            resetAgents();
+            hidePodcastPlayer();
+
+            try {
+                console.log('Starting analysis for:', { index, language });
+
+                const response = await fetch(`${API_BASE_URL}/analyze`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        index: index,
+                        language: language
+                    })
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}`);
+                }
+
+                const data = await response.json();
+                console.log('Analysis started:', data);
+
+                currentAnalysisId = data.analysis_id;
+
+                analyzeBtn.innerHTML = '<i class="fas fa-sync-alt spinner"></i> Analysis Running...';
+                showNotification('Analysis started! Tracking progress...', 'info');
+
+                // Start polling
+                startPolling();
+
+            } catch (error) {
+                console.error('Error starting analysis:', error);
+                showNotification('Failed to start analysis. Make sure the server is running.', 'error');
+                analyzeBtn.disabled = false;
+                analyzeBtn.innerHTML = '<i class="fas fa-play"></i> Start Analysis';
+            }
+        }
+
+        // Start polling for updates
+        function startPolling() {
+            if (pollingInterval) {
+                clearInterval(pollingInterval);
+            }
+
+            pollingInterval = setInterval(async () => {
+                try {
+                    const response = await fetch(`${API_BASE_URL}/analysis/${currentAnalysisId}`);
+                    if (!response.ok) {
+                        throw new Error('Failed to get analysis status');
+                    }
+
+                    const data = await response.json();
+                    console.log('Polling update:', data);
+
+                    updateUI(data);
+
+                    if (data.status === 'completed' || data.status === 'failed') {
+                        clearInterval(pollingInterval);
+                        const analyzeBtn = document.getElementById('analyzeBtn');
+                        analyzeBtn.disabled = false;
+                        analyzeBtn.innerHTML = '<i class="fas fa-play"></i> Start Analysis';
+
+                        if (data.status === 'completed') {
+                            showNotification('Analysis completed successfully!', 'success');
+                            setupPodcastPlayer(data.agents.podcaster.data);
+                        } else {
+                            showNotification('Analysis failed: ' + data.error, 'error');
+                        }
+                    }
+
+                } catch (error) {
+                    console.error('Polling error:', error);
+                }
+            }, 1000);
+        }
+
+        // Update UI with current status
+        function updateUI(analysisData) {
+            const agents = analysisData.agents;
+
+            Object.keys(agents).forEach(agentKey => {
+                const agent = agents[agentKey];
+
+                // Update status badge
+                const statusElement = document.getElementById(`status-${agentKey}`);
+                if (statusElement) {
+                    statusElement.textContent = agent.status.charAt(0).toUpperCase() + agent.status.slice(1);
+                    statusElement.className = `status-${agent.status}`;
+                }
+
+                // Update progress bar
+                const progressElement = document.getElementById(`progress-${agentKey}`);
+                if (progressElement) {
+                    progressElement.style.width = `${agent.progress}%`;
+                }
+
+                // Update card styling
+                const cardElement = document.getElementById(`agent-${agentKey}`);
+                if (cardElement) {
+                    cardElement.className = `agent-card card ${agent.status}`;
+                }
+
+                // Update data if available
+                if (agent.data && agent.status === 'completed') {
+                    displayAgentData(agentKey, agent.data);
+                }
+            });
+        }
+
+        // Display agent data
+        function displayAgentData(agentKey, data) {
+            const dataElement = document.getElementById(`data-${agentKey}`);
+            dataElement.classList.remove('hidden');
+
+            let html = '<div class="data-grid">';
+
+            if (agentKey === 'trendAnalyzer') {
+                html += `
+                    <div class="data-item">
+                        <span class="data-label">Current Price</span>
+                        <span class="data-value">₹${data.price.toLocaleString('en-IN')}</span>
+                    </div>
+                    <div class="data-item">
+                        <span class="data-label">Change</span>
+                        <span class="data-value ${data.change >= 0 ? 'positive' : 'negative'}">
+                            ${data.change >= 0 ? '+' : ''}${data.change.toFixed(2)} (${data.change_percent.toFixed(2)}%)
+                        </span>
+                    </div>
+                    <div class="data-item">
+                        <span class="data-label">Trend</span>
+                        <span class="data-value">${data.analysis.trend}</span>
+                    </div>
+                    <div class="data-item">
+                        <span class="data-label">RSI</span>
+                        <span class="data-value">${data.indicators.RSI}</span>
+                    </div>
+                `;
+            } else if (agentKey === 'dataCollector') {
+                html += `
+                    <div class="data-item">
+                        <span class="data-label">Data Sources</span>
+                        <span class="data-value">${data.sources.length} sources</span>
+                    </div>
+                    <div class="data-item">
+                        <span class="data-label">Top Sector</span>
+                        <span class="data-value">${data.sectors[0].name} ${data.sectors[0].performance}</span>
+                    </div>
+                    <div class="data-item">
+                        <span class="data-label">Repo Rate</span>
+                        <span class="data-value">${data.economic_data.repo_rate}</span>
+                    </div>
+                `;
+            } else if (agentKey === 'scriptWriter') {
+                html += `
+                    <div class="data-item">
+                        <span class="data-label">Language</span>
+                        <span class="data-value">${data.language}</span>
+                    </div>
+                    <div class="data-item">
+                        <span class="data-label">Word Count</span>
+                        <span class="data-value">${data.word_count}</span>
+                    </div>
+                    <div class="data-item">
+                        <span class="data-label">Duration</span>
+                        <span class="data-value">${data.duration_estimate}</span>
+                    </div>
+                `;
+            } else if (agentKey === 'podcaster') {
+                html += `
+                    <div class="data-item">
+                        <span class="data-label">Duration</span>
+                        <span class="data-value">${data.duration}</span>
+                    </div>
+                    <div class="data-item">
+                        <span class="data-label">Format</span>
+                        <span class="data-value">${data.format}</span>
+                    </div>
+                    <div class="data-item">
+                        <span class="data-label">Voice</span>
+                        <span class="data-value">${data.voice}</span>
+                    </div>
+                `;
+            }
+
+            html += '</div>';
+            dataElement.innerHTML = html;
+        }
+
+        // Reset all agents to idle state
+        function resetAgents() {
+            const agents = ['trendAnalyzer', 'dataCollector', 'scriptWriter', 'podcaster'];
+            agents.forEach(agent => {
+                const statusElement = document.getElementById(`status-${agent}`);
+                const progressElement = document.getElementById(`progress-${agent}`);
+                const dataElement = document.getElementById(`data-${agent}`);
+                const cardElement = document.getElementById(`agent-${agent}`);
+
+                if (statusElement) {
+                    statusElement.textContent = 'Idle';
+                    statusElement.className = 'status-idle';
+                }
+                if (progressElement) progressElement.style.width = '0%';
+                if (dataElement) dataElement.classList.add('hidden');
+                if (cardElement) cardElement.className = 'agent-card card';
+            });
+        }
+
+        // Setup podcast player
+        function setupPodcastPlayer(podcastData) {
+            const player = document.getElementById('podcastPlayer');
+            const title = document.getElementById('podcastTitle');
+            const subtitle = document.getElementById('podcastSubtitle');
+            const fileInfo = document.getElementById('fileInfo');
+            const downloadBtn = document.getElementById('downloadBtn');
+
+            player.classList.remove('hidden');
+            title.textContent = podcastData.title;
+            subtitle.textContent = 'Ready to play';
+            fileInfo.textContent = `${podcastData.format} • ${podcastData.file_size} • ${podcastData.duration}`;
+
+            // Setup download
+            downloadBtn.onclick = () => {
+                window.open(`http://localhost:8000${podcastData.audio_url}`, '_blank');
+            };
+
+            // Setup audio player
+            setupAudioPlayer(podcastData.audio_url);
+        }
+
+        // Setup audio player
+        function setupAudioPlayer(audioUrl) {
+            audioPlayer = new Audio(`http://localhost:8000${audioUrl}`);
+            const playBtn = document.getElementById('playBtn');
+            const progressBar = document.getElementById('audioProgress');
+            const currentTimeEl = document.getElementById('currentTime');
+            const durationEl = document.getElementById('duration');
+
+            playBtn.onclick = () => togglePlay();
+
+            audioPlayer.ontimeupdate = () => {
+                if (audioPlayer.duration) {
+                    const progress = (audioPlayer.currentTime / audioPlayer.duration) * 100;
+                    progressBar.style.width = `${progress}%`;
+                    currentTimeEl.textContent = formatTime(audioPlayer.currentTime);
+                }
+            };
+
+            audioPlayer.onloadedmetadata = () => {
+                durationEl.textContent = formatTime(audioPlayer.duration);
+            };
+
+            audioPlayer.onended = () => {
+                isPlaying = false;
+                playBtn.innerHTML = '<i class="fas fa-play"></i>';
+                progressBar.style.width = '0%';
+                currentTimeEl.textContent = '0:00';
+            };
+        }
+
+        function togglePlay() {
+            if (!audioPlayer) return;
+
+            if (isPlaying) {
+                audioPlayer.pause();
+                document.getElementById('playBtn').innerHTML = '<i class="fas fa-play"></i>';
+            } else {
+                audioPlayer.play();
+                document.getElementById('playBtn').innerHTML = '<i class="fas fa-pause"></i>';
+            }
+            isPlaying = !isPlaying;
+        }
+
+        function updateVolume() {
+            if (audioPlayer) {
+                audioPlayer.volume = document.getElementById('volumeSlider').value;
+            }
+        }
+
+        function downloadPodcast() {
+            if (!audioPlayer || !currentAnalysisId) return;
+
+            // This would typically download the actual file
+            showNotification('Podcast download started...', 'info');
+        }
+
+        function hidePodcastPlayer() {
+            const player = document.getElementById('podcastPlayer');
+            player.classList.add('hidden');
+
+            if (audioPlayer) {
+                audioPlayer.pause();
+                audioPlayer = null;
+            }
+            isPlaying = false;
+        }
+
+        // Notification System
+        function showNotification(message, type = 'info') {
+            const notification = document.getElementById('notification');
+            notification.textContent = message;
+            notification.className = `notification ${type} show`;
+
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 5000);
+        }
+
+        // Utility Functions
+        function formatTime(seconds) {
+            if (isNaN(seconds)) return "0:00";
+            const mins = Math.floor(seconds / 60);
+            const secs = Math.floor(seconds % 60);
+            return `${mins}:${secs < 10 ? '0' : ''}${secs}`;
+        }
+
+        // Cleanup
+        window.addEventListener('beforeunload', () => {
+            if (pollingInterval) {
+                clearInterval(pollingInterval);
+            }
+            if (audioPlayer) {
+                audioPlayer.pause();
+            }
+        });
+    </script>
+</body>
+</html>
