@@ -9,9 +9,17 @@
 
 An intelligent, multi-agent AI system that autonomously monitors Indian stock market indices, extracts verified data from official financial sources (RBI, SEBI, NSE, BSE), and generates professional podcast episodes in multiple Indian languages explaining market movements with data-backed justifications.
 
-![TrendCast India Demo](https://via.placeholder.com/800x400/FF9933/FFFFFF?text=TrendCast+India+Demo)
+
+
+https://github.com/user-attachments/assets/9b57f11d-35e0-4baf-a8c2-6776c435394b
+
+
 
 ---
+
+
+
+
 
 ## 🌟 Features
 
